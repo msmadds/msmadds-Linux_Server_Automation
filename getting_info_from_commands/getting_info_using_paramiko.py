@@ -44,7 +44,7 @@ def get_info(hostname, password, username, port, commands):
                         
                             
             except ssh_exception.AuthenticationException: 
-                #capture the paramiko authenti cation exception
+                #capture the paramiko authentication exception
                 print(f"Authentication failed for {host}, check credentials")
                 
 def  check_ip_availability(hostname):
