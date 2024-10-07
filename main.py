@@ -5,6 +5,7 @@ import  getpass
 import time
 import nmap
 
+#Ths part of code is runs faster than the first version by using the nmap library
 #give the script a full vlan range, and the script test to see if an IP is availabe by ping, in that range
 #and for the IP that is available  by ping to ssh into the Linux server and run the linux command to get the info on that machine 
 
@@ -12,8 +13,7 @@ import nmap
 
 
 def get_info(hostname, password, username, port, commands):
-    """ The function to check the  """
-    print(hostname)
+    """ The function to check to get the info from the linux server """
     try:
         #open the ssh connection 
         ssh = paramiko.SSHClient()
@@ -43,13 +43,7 @@ def get_info(hostname, password, username, port, commands):
     except ssh_exception.AuthenticationException: 
                 #capture the paramiko authenti cation exception
                 print(f"Authentication failed for {hostname}, check credentials")
-                
-def  check_ipavailability(hostname):
-        
-    #check if the the IP  is available by ping
-    response = os.system("ping -c 1 " + hostname + "> /Users/madelinehaule/Documents/AUTOMATION/SERVERS_AUTO/output.txt" ) 
-     #if the IP is available the response of the ping will be 0
-    return response
+
 
 def check_ip_availability(hostname):
     nm = nmap.PortScanner()
@@ -61,12 +55,13 @@ def check_ip_availability(hostname):
 def main():
     #main function
     start = time.time()
-    port = 22
+    port = 22 #specify the ssh port if not the default 22
     username = input("Input the username: ")
     password = getpass.getpass()
-    #commands =['cat /etc/debian_version', 'cat /etc/passwd', 'ls']
+    #commands =['cat /etc/debian_version', 'cat /etc/passwd', 'ls'] 
+    #either have a list of linux commands that you want to run in the above list, or a single command in the below. 
     commands =['cat /etc/passwd']
-    hostname = "10.4.13.0/29" #input the three octacte of your IP 
+    hostname = "xx.xx.xx.0/24" #input the range of your IP 
     
     hosts = check_ip_availability(hostname)
     #print(hosts)
